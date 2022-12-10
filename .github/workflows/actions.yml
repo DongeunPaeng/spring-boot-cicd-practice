@@ -1,0 +1,14 @@
+name: Java CI/CD to CodeDeploy
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  test:
+    name: test logging
+    runs-on: ubuntu-18.04
+    
+    steps:
+    - name: logging starts
+      run: echo "hello world"
