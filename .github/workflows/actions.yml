@@ -20,8 +20,7 @@ jobs:
       with:
         arguments: build
     - name: Make a directory
-      # let's see what files and directories are there, with 'ls' command.
-      run: ls && mkdir deploy
+      run: mkdir deploy
     - name: Copy jar file to "deploy" directory
       run: cp ./build/libs/*.jar ./deploy/
     - name: Make a zip file
