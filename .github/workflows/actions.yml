@@ -16,13 +16,12 @@ jobs:
         java-version: '17'
         distribution: 'adopt'
     - name: Build with Gradle
-      # does this clean previous files?
       uses: gradle/gradle-build-action@67421db6bd0bf253fb4bd25b31ebb98943c375e1
       with:
         arguments: build
     - name: Make a directory
-      # let's see what files and directories are there, with 'll' command.
-      run: ll && mkdir deploy
+      # let's see what files and directories are there, with 'ls' command.
+      run: ls && mkdir deploy
     - name: Copy jar file to "deploy" directory
       run: cp ./build/libs/*.jar ./deploy/
     - name: Make a zip file
