@@ -1,2 +1,4 @@
 #!/bin/bash
-echo "codedeploy agent가 나를 잘 읽는 것 같다."
+nohup java -jar simple-rest-app-0.0.1-SNAPSHOT.jar &
+echo "application restarted..."
+exit 0
