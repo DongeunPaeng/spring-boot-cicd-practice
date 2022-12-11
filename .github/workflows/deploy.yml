@@ -6,7 +6,7 @@ on:
 
 env:
   AWS_REGION: ap-northeast-2
-  S3BUCKET: s3://github-actions-deploy-spring
+  S3BUCKET: github-actions-deploy-spring
 
 jobs:
   build:
@@ -33,4 +33,10 @@ jobs:
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: aws s3 cp --region ${{ env.AWS_REGION }} --acl private ./${{ github.sha }}.zip ${{ env.S3BUCKET }}/spring-cicd/${{ github.sha }}.zip
+      run: aws s3 cp --region ${{ env.AWS_REGION }} --acl private ./${{ github.sha }}.zip s3://${{ env.S3BUCKET }}/spring-cicd/${{ github.sha }}.zip
+    - name: Code Deploy
+      run:
+        aws deploy create-deployment
+        --application-name spring-rest-server-auto-deploy
+        --deployment-group-name spring-rest-server-auto-deploy
+        --s3-location bucket=${{ env.S3BUCKET }},bundleType=zip,key=spring-cicd/${{ github.sha }}.zip
