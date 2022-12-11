@@ -26,7 +26,7 @@ jobs:
       - name: Make a directory
         run: mkdir deploy
       - name: Copy jar file to "deploy" directory
-        run: cp ./build/libs/*.jar ./deploy/
+        run: cp ./build/libs/*.jar ./appspec.yml ./infra/**/* ./deploy/
       - name: Make a zip file
         run: zip -r -qq -j ./${{ github.sha }}.zip ./deploy
       - name: Deliver the zip file to S3 bucket
