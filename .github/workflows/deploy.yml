@@ -35,6 +35,9 @@ jobs:
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run: aws s3 cp --region ${{ env.AWS_REGION }} --acl private ./${{ github.sha }}.zip s3://${{ env.S3BUCKET }}/spring-cicd/${{ github.sha }}.zip
     - name: Code Deploy
+      env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
       run:
         aws deploy create-deployment
         --application-name spring-rest-server-auto-deploy
