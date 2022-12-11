@@ -1,6 +1,6 @@
 #!/bin/bash
-PID=${sudo pgrep -f SNAPSHOT}
-echo "id: ${PID} detected"
+PID=$(pgrep -f SNAPSHOT.jar)
 if [[ -n ${PID} ]]; then
-  sudo kill "${PID}"
+    echo "killing the previous app running..."
+    sudo kill "${PID}"
 fi
