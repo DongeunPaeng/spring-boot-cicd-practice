@@ -4,6 +4,11 @@ on:
   push:
     branches: [ "main" ]
 
+env:
+  artifactName: spring-cicd-build
+  AWS_REGION: ap-northeast-2
+  S3BUCKET: s3://github-actions-deploy-spring
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,13 +29,9 @@ jobs:
     - name: Copy jar file to "deploy" directory
       run: cp ./build/libs/*.jar ./deploy/
     - name: Make a zip file
-      run: zip -r -qq -j ./spring-cicd-build.zip ./deploy
+      run: zip -r -qq -j ./${{ env.artifactName }}.zip ./deploy
     - name: Deliver the zip file to S3 bucket
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-      run: |
-        aws s3 cp \
-        --region ap-northeast-2 \
-        --acl private \
-        ./spring-cicd-build.zip s3://github-actions-deploy-spring/
+      run: aws s3 cp --region ${{ env.AWS_REGION }} --acl private ./${{ env.artifactName }}.zip ${{ env.S3BUCKET }}/
