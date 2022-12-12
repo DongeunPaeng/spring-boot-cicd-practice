@@ -18,8 +18,14 @@ public class PostsApiController {
     private final PostsService postsService;
 
     @GetMapping("/api/v1/post")
-    public List<PostDto> findPosts() {
-        return postsService.findPosts();
+    public List<PostDto> getPosts() {
+        return postsService.getPosts();
+    }
+
+    // TODO: need token
+    @GetMapping("/api/v1/post/draft")
+    public List<PostDto> getDrafts() {
+        return postsService.getDrafts();
     }
 
     @PostMapping("/api/v1/post/write")

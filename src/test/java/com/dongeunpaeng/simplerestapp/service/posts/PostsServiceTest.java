@@ -49,7 +49,22 @@ class PostsServiceTest {
     }
 
     @Test
-    public void findPosts() {
+    public void getDrafts() {
+        // given
+        Posts post1 = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(1L).build();
+        Posts post2 = Posts.builder().author(1L).title("test title").post("test post").status(1L).type(1L).build();
+        Posts post3 = Posts.builder().author(1L).title("test title").post("test post").status(2L).type(0L).build();
+        Posts post4 = Posts.builder().author(1L).title("test title").post("test post").status(2L).type(1L).build();
+        when(postsRepository.findAllByStatusGreaterThan(0L)).thenReturn(Arrays.asList(post2, post3, post4));
+        // when
+        List<PostDto> returnedPosts = postsService.getDrafts();
+        // then
+        assertTrue(returnedPosts.size() == 3);
+        assertTrue(!returnedPosts.contains(PostDto.builder().entity(post1).build()));
+    }
+
+    @Test
+    public void getPosts() {
         // given
         Posts posts = Posts.builder()
                 .author(1L)
@@ -60,7 +75,7 @@ class PostsServiceTest {
                 .build();
         when(postsRepository.findAll()).thenReturn(Arrays.asList(posts));
         // when
-        List<PostDto> returnedPosts = postsService.findPosts();
+        List<PostDto> returnedPosts = postsService.getPosts();
         // then
         assertTrue(returnedPosts.size() == 1);
         assertTrue(returnedPosts.get(0).getTitle() == posts.getTitle());

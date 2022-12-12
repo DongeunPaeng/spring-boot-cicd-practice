@@ -16,8 +16,13 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     @Transactional(readOnly = true)
-    public List<PostDto> findPosts() {
+    public List<PostDto> getPosts() {
         return postsRepository.findAll().stream().map(PostDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<PostDto> getDrafts() {
+        return postsRepository.findAllByStatusGreaterThan(0L).stream().map(PostDto::new).collect(Collectors.toList());
     }
 
     @Transactional
