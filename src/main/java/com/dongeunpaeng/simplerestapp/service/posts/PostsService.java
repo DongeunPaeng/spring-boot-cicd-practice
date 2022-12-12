@@ -1,5 +1,6 @@
 package com.dongeunpaeng.simplerestapp.service.posts;
 
+import com.dongeunpaeng.simplerestapp.domain.posts.PostStatus;
 import com.dongeunpaeng.simplerestapp.domain.posts.Posts;
 import com.dongeunpaeng.simplerestapp.domain.posts.PostsRepository;
 import com.dongeunpaeng.simplerestapp.web.dto.PostDto;
@@ -22,7 +23,8 @@ public class PostsService {
 
     @Transactional
     public List<PostDto> getDrafts() {
-        return postsRepository.findAllByStatusGreaterThan(0L).stream().map(PostDto::new).collect(Collectors.toList());
+        return postsRepository.findAllByStatusGreaterThan(PostStatus.PUBLIC.numeric).stream().map(PostDto::new)
+                .collect(Collectors.toList());
     }
 
     @Transactional
