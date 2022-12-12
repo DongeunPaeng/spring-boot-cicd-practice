@@ -1,5 +1,6 @@
 package com.dongeunpaeng.simplerestapp.service.posts;
 
+import com.dongeunpaeng.simplerestapp.domain.posts.Posts;
 import com.dongeunpaeng.simplerestapp.domain.posts.PostsRepository;
 import com.dongeunpaeng.simplerestapp.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
@@ -17,5 +18,12 @@ public class PostsService {
     @Transactional(readOnly = true)
     public List<PostDto> findPosts() {
         return postsRepository.findAll().stream().map(PostDto::new).collect(Collectors.toList());
+    }
+
+    @Transactional
+    public Long savePost(PostDto saveDto) {
+        Posts returnedPost = postsRepository.save(saveDto.toEntity());
+        System.out.println(returnedPost.getTitle());
+        return returnedPost.getId();
     }
 }

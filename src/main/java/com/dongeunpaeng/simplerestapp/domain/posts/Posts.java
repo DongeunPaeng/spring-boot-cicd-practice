@@ -2,14 +2,13 @@ package com.dongeunpaeng.simplerestapp.domain.posts;
 
 import com.dongeunpaeng.simplerestapp.domain.BaseEntity;
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @NoArgsConstructor
 @Entity
-@Table(name = "posts")
 public class Posts extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,10 +24,17 @@ public class Posts extends BaseEntity {
     private String post;
 
     @Column(nullable = false)
-    @ColumnDefault("0")
     private Long status;
 
     @Column(nullable = false)
-    @ColumnDefault("0")
     private Long type;
+
+    @Builder
+    public Posts(Long author, String title, String post, Long status, Long type) {
+        this.author = author;
+        this.title = title;
+        this.post = post;
+        this.status = status;
+        this.type = type;
+    }
 }
