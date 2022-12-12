@@ -1,6 +1,9 @@
 {{>layout/header}}
 <h1>Let's see CI/CD works fine...</h1>
 <div>
-My personal project - deploy time at 10:26
+Below are the posts:
+    {{#posts}}
+        <p>{{title}}</p>
+    {{/posts}}
 </div>
 {{>layout/footer}}

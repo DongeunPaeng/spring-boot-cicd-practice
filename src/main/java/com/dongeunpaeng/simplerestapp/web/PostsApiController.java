@@ -1,19 +1,21 @@
 package com.dongeunpaeng.simplerestapp.web;
 
 import com.dongeunpaeng.simplerestapp.service.posts.PostsService;
+import com.dongeunpaeng.simplerestapp.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RequiredArgsConstructor
-@Controller
-public class IndexController {
+@RestController
+public class PostsApiController {
     private final PostsService postsService;
 
-    @GetMapping("/")
-    public String index(Model model) {
-        model.addAttribute("posts", postsService.findPosts());
-        return "index";
+    @GetMapping("/api/v1/posts")
+    public List<PostDto> findPosts() {
+        return postsService.findPosts();
     }
 }
