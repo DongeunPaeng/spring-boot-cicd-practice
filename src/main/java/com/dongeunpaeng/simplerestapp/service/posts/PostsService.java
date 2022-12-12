@@ -21,6 +21,12 @@ public class PostsService {
         return postsRepository.findAll().stream().map(PostDto::new).collect(Collectors.toList());
     }
 
+    @Transactional(readOnly = true)
+    public PostDto getPost(Long id) {
+        Posts entity = postsRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("없는 ID입니다."));
+        return PostDto.builder().entity(entity).build();
+    }
+
     @Transactional
     public List<PostDto> getDrafts() {
         return postsRepository.findAllByStatusGreaterThan(PostStatus.PUBLIC.numeric).stream().map(PostDto::new)
@@ -29,8 +35,6 @@ public class PostsService {
 
     @Transactional
     public Long savePost(PostDto saveDto) {
-        Posts returnedPost = postsRepository.save(saveDto.toEntity());
-        System.out.println(returnedPost.getTitle());
-        return returnedPost.getId();
+        return postsRepository.save(saveDto.toEntity()).getId();
     }
 }

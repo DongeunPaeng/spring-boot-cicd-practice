@@ -4,10 +4,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 import static org.mockito.ArgumentMatchers.any;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 
+import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -30,16 +31,8 @@ class PostsServiceTest {
     @Test
     public void savePost() {
         // given
-        Posts posts = Posts.builder()
-                .author(1L)
-                .title("test title")
-                .post("test post")
-                .status(0L)
-                .type(0L)
-                .build();
-        PostDto saveDto = PostDto.builder()
-                .entity(posts)
-                .build();
+        Posts posts = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(0L).build();
+        PostDto saveDto = PostDto.builder().entity(posts).build();
         when(postsRepository.save(any())).thenReturn(posts);
         ReflectionTestUtils.setField(posts, "id", 123L);
         // when
@@ -66,13 +59,7 @@ class PostsServiceTest {
     @Test
     public void getPosts() {
         // given
-        Posts posts = Posts.builder()
-                .author(1L)
-                .title("test title")
-                .post("test post")
-                .status(0L)
-                .type(0L)
-                .build();
+        Posts posts = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(0L).build();
         when(postsRepository.findAll()).thenReturn(Arrays.asList(posts));
         // when
         List<PostDto> returnedPosts = postsService.getPosts();
@@ -83,5 +70,21 @@ class PostsServiceTest {
         assertTrue(returnedPosts.get(0).getPost() == posts.getPost());
         assertTrue(returnedPosts.get(0).getStatus() == posts.getStatus());
         assertTrue(returnedPosts.get(0).getType() == posts.getType());
+    }
+
+    @Test
+    public void getPost() throws Exception {
+        // given
+        Posts posts = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(0L).build();
+        when(postsRepository.findById(any())).thenReturn(Optional.of(posts));
+        // when
+        PostDto returnedPosts = postsService.getPost(123L);
+        // then
+        Assertions.assertThat(returnedPosts).isNotNull();
+        assertEquals(returnedPosts.getTitle(), posts.getTitle());
+        assertEquals(returnedPosts.getAuthor(), posts.getAuthor());
+        assertEquals(returnedPosts.getPost(), posts.getPost());
+        assertEquals(returnedPosts.getStatus(), posts.getStatus());
+        assertEquals(returnedPosts.getType(), posts.getType());
     }
 }
