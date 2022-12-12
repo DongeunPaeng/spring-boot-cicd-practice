@@ -28,6 +28,11 @@ public class PostsApiController {
         return postsService.getPost(id);
     }
 
+    @GetMapping("/api/v1/post/draft/{id}")
+    public PostDto getDraft(@PathVariable Long id) {
+        return postsService.getPost(id);
+    }
+
     // TODO: need token
     @GetMapping("/api/v1/post/draft")
     public List<PostDto> getDrafts() {

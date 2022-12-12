@@ -27,7 +27,7 @@ public class PostsService {
         return PostDto.builder().entity(entity).build();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<PostDto> getDrafts() {
         return postsRepository.findAllByStatusGreaterThan(PostStatus.PUBLIC.numeric).stream().map(PostDto::new)
                 .collect(Collectors.toList());
