@@ -5,6 +5,7 @@ import com.dongeunpaeng.simplerestapp.domain.posts.Posts;
 import com.dongeunpaeng.simplerestapp.domain.posts.PostsRepository;
 import com.dongeunpaeng.simplerestapp.web.dto.PostDto;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
