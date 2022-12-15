@@ -38,6 +38,8 @@ class PostsApiControllerTest {
         PostDto postDto3 = PostDto.builder().entity(post3).build();
         PostDto postDto4 = PostDto.builder().entity(post4).build();
         when(postsService.getPosts()).thenReturn(Arrays.asList(postDto1, postDto2, postDto3, postDto4));
+        when(postsService.getPost(1L)).thenReturn(postDto1);
+        when(postsService.getDrafts()).thenReturn(Arrays.asList(postDto2, postDto3, postDto4));
     }
 
     @Test
@@ -54,12 +56,23 @@ class PostsApiControllerTest {
 
     @Test
     public void getPost() throws Exception {
-        // TODO: finish
+        mvc.perform(MockMvcRequestBuilders
+                .get("/api/v1/post/1")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$.status").value(0L));
     }
 
     @Test
     public void getDrafts() throws Exception {
-        // TODO: finish
+        // TODO: need token
+        mvc.perform(MockMvcRequestBuilders
+                .get("/api/v1/post/draft")
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].status").value(1L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].status").value(2L))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[2].status").value(2L));
     }
 
     @Test
