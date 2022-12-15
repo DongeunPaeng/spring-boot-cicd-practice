@@ -1,7 +1,5 @@
 package com.dongeunpaeng.simplerestapp.web;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,12 +10,14 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.any;
 
 import java.util.Arrays;
 
 import com.dongeunpaeng.simplerestapp.domain.posts.Posts;
 import com.dongeunpaeng.simplerestapp.service.posts.PostsService;
 import com.dongeunpaeng.simplerestapp.web.dto.PostDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(PostsApiController.class)
 class PostsApiControllerTest {
@@ -27,19 +27,21 @@ class PostsApiControllerTest {
     @MockBean
     private PostsService postsService;
 
+    Posts post1 = Posts.builder().author(1L).title("test title1").post("test post1").status(0L).type(1L).build();
+    Posts post2 = Posts.builder().author(1L).title("test title2").post("test post2").status(1L).type(1L).build();
+    Posts post3 = Posts.builder().author(1L).title("test title3").post("test post3").status(2L).type(0L).build();
+    Posts post4 = Posts.builder().author(1L).title("test title4").post("test post4").status(2L).type(1L).build();
+    PostDto postDto1 = PostDto.builder().entity(post1).build();
+    PostDto postDto2 = PostDto.builder().entity(post2).build();
+    PostDto postDto3 = PostDto.builder().entity(post3).build();
+    PostDto postDto4 = PostDto.builder().entity(post4).build();
+
     @BeforeEach
     void initEach() {
-        Posts post1 = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(1L).build();
-        Posts post2 = Posts.builder().author(1L).title("test title").post("test post").status(1L).type(1L).build();
-        Posts post3 = Posts.builder().author(1L).title("test title").post("test post").status(2L).type(0L).build();
-        Posts post4 = Posts.builder().author(1L).title("test title").post("test post").status(2L).type(1L).build();
-        PostDto postDto1 = PostDto.builder().entity(post1).build();
-        PostDto postDto2 = PostDto.builder().entity(post2).build();
-        PostDto postDto3 = PostDto.builder().entity(post3).build();
-        PostDto postDto4 = PostDto.builder().entity(post4).build();
         when(postsService.getPosts()).thenReturn(Arrays.asList(postDto1, postDto2, postDto3, postDto4));
         when(postsService.getPost(1L)).thenReturn(postDto1);
         when(postsService.getDrafts()).thenReturn(Arrays.asList(postDto2, postDto3, postDto4));
+        when(postsService.savePost(any())).thenReturn(123L);
     }
 
     @Test
@@ -77,6 +79,14 @@ class PostsApiControllerTest {
 
     @Test
     public void savePost() throws Exception {
-        // TODO: finish
+        // TODO: need token
+        String reqBody = new ObjectMapper().writeValueAsString(postDto1);
+        mvc.perform(MockMvcRequestBuilders
+                .post("/api/v1/post/write")
+                .content(reqBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value(123L));
     }
 }

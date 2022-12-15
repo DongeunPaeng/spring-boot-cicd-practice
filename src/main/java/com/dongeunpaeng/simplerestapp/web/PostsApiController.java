@@ -39,6 +39,7 @@ public class PostsApiController {
         return postsService.getDrafts();
     }
 
+    // TODO: need token
     @PostMapping("/api/v1/post/write")
     public Long savePost(@RequestBody PostDto postDto) {
         return postsService.savePost(postDto);
