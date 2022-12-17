@@ -29,13 +29,16 @@ public class Posts extends BaseEntity {
     @Column(nullable = false)
     private Long type;
 
+    private Boolean deleted = Boolean.FALSE;
+
     @Builder
-    public Posts(Long id, Long author, String title, String post, Long status, Long type) {
+    public Posts(Long id, Long author, String title, String post, Long status, Long type, Boolean deleted) {
         this.id = id;
         this.author = author;
         this.title = title;
         this.post = post;
         this.status = status;
         this.type = type;
+        this.deleted = deleted;
     }
 }

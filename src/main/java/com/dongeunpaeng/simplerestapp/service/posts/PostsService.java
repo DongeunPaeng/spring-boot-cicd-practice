@@ -45,4 +45,11 @@ public class PostsService {
                 .orElseThrow(() -> new IllegalArgumentException("없는 ID입니다."));
         return postsRepository.save(editDto.toEntity()).getId();
     }
+
+    @Transactional
+    public void deletePost(PostDto deleteDto) {
+        postsRepository.findById(deleteDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("없는 ID입니다."));
+        postsRepository.deleteById(deleteDto.getId());
+    }
 }

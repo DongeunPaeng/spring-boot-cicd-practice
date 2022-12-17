@@ -36,9 +36,9 @@ class PostsApiControllerTest {
     PostDto postDto3 = PostDto.builder().entity(post3).build();
     PostDto postDto4 = PostDto.builder().entity(post4).build();
 
-    Posts postToEdit = Posts.builder().id(123L).author(1L).title("test title4").post("test post4").status(2L).type(1L)
+    Posts postGiven = Posts.builder().id(123L).author(1L).title("test title4").post("test post4").status(2L).type(1L)
             .build();
-    PostDto postToEditDto = PostDto.builder().entity(postToEdit).build();
+    PostDto postGivenDto = PostDto.builder().entity(postGiven).build();
 
     @BeforeEach
     void initEach() {
@@ -98,7 +98,7 @@ class PostsApiControllerTest {
     @Test
     public void editPost() throws Exception {
         // TODO: need token
-        String reqBody = new ObjectMapper().writeValueAsString(postToEditDto);
+        String reqBody = new ObjectMapper().writeValueAsString(postGivenDto);
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/v1/post/edit")
                 .content(reqBody)
@@ -106,5 +106,18 @@ class PostsApiControllerTest {
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").value(123L));
+    }
+
+    @Test
+    public void deletePost() throws Exception {
+        // TODO: need token
+        String reqBody = new ObjectMapper().writeValueAsString(postGivenDto);
+        mvc.perform(MockMvcRequestBuilders
+                .post("/api/v1/post/delete")
+                .content(reqBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.content().string("successfully deleted"));
     }
 }

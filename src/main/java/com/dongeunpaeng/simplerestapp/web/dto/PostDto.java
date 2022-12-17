@@ -14,6 +14,7 @@ public class PostDto {
     private String post;
     private Long status;
     private Long type;
+    private Boolean deleted;
 
     @Builder
     public PostDto(Posts entity) {
@@ -23,6 +24,7 @@ public class PostDto {
         this.post = entity.getPost();
         this.status = entity.getStatus();
         this.type = entity.getType();
+        this.deleted = entity.getDeleted();
     }
 
     public Posts toEntity() {
@@ -33,6 +35,7 @@ public class PostDto {
                 .post(post)
                 .status(status)
                 .type(type)
+                .deleted(deleted)
                 .build();
     }
 }

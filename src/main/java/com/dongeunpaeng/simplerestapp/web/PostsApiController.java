@@ -52,9 +52,11 @@ public class PostsApiController {
         return postsService.editPost(postDto);
     }
 
-    // // TODO: need token
-    // @PostMapping("/api/v1/post/delete")
-    // public Long deletePost(@RequestBody PostDto postDto) {
-    // return postsService.deletePost(postDto);
-    // }
+    // TODO: need token
+    @PostMapping("/api/v1/post/delete")
+    public String deletePost(@RequestBody PostDto postDto) {
+        postsService.deletePost(postDto);
+        return "successfully deleted";
+        // FIXME: is this the best practice for deleting job?
+    }
 }
