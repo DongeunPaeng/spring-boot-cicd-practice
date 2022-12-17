@@ -1,5 +1,7 @@
 package com.dongeunpaeng.simplerestapp.domain.posts;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import com.dongeunpaeng.simplerestapp.domain.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Builder;
@@ -29,7 +31,9 @@ public class Posts extends BaseEntity {
     @Column(nullable = false)
     private Long type;
 
-    private Boolean deleted = Boolean.FALSE;
+    @ColumnDefault("FALSE")
+    @Column(nullable = false)
+    private Boolean deleted;
 
     @Builder
     public Posts(Long id, Long author, String title, String post, Long status, Long type, Boolean deleted) {

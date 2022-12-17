@@ -114,12 +114,8 @@ class PostsServiceTest {
     @Test
     public void deletePost() {
         // given
-        Posts posts = Posts.builder().id(123L).author(1L).title("test title").post("test post").status(0L).type(0L)
-                .build();
-        PostDto deleteDto = PostDto.builder().entity(posts).build();
-        when(postsRepository.findById(123L)).thenReturn(Optional.of(posts));
-        // when
-        postsService.deletePost(deleteDto);
-        // then... no then
+        assertThrows(IllegalArgumentException.class, () -> {
+            postsService.deletePost(111L);
+        });
     }
 }

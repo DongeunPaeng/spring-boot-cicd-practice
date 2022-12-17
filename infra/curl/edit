@@ -1,4 +1,4 @@
-curl --location --request POST 'localhost:8080/api/v1/post/edit' \
+curl --location --request PUT 'localhost:8080/api/v1/post/edit' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "id": 1,
@@ -9,7 +9,7 @@ curl --location --request POST 'localhost:8080/api/v1/post/edit' \
     "type": 1
 }'
 
-curl --location --request POST 'localhost:8080/api/v1/post/edit' \
+curl --location --request PUT 'localhost:8080/api/v1/post/edit' \
 --header 'Content-Type: application/json' \
 --data-raw '{
     "id": 2,

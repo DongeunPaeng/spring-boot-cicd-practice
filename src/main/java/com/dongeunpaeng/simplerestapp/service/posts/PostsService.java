@@ -47,9 +47,9 @@ public class PostsService {
     }
 
     @Transactional
-    public void deletePost(PostDto deleteDto) {
-        postsRepository.findById(deleteDto.getId())
+    public void deletePost(Long postId) {
+        postsRepository.findById(postId)
                 .orElseThrow(() -> new IllegalArgumentException("없는 ID입니다."));
-        postsRepository.deleteById(deleteDto.getId());
+        postsRepository.deleteById(postId);
     }
 }

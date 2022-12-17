@@ -15,6 +15,7 @@ public class PostDto {
     private Long status;
     private Long type;
     private Boolean deleted;
+    // FIXME: what about createdAt and modifiedAt?
 
     @Builder
     public PostDto(Posts entity) {
@@ -35,7 +36,8 @@ public class PostDto {
                 .post(post)
                 .status(status)
                 .type(type)
-                .deleted(deleted)
+                .deleted(deleted == null ? Boolean.FALSE : deleted)
+                // FIXME: toEntity에서 null을 보내줬을 때 왜 Entity에서 자체적으로 default 값을 못 줄까
                 .build();
     }
 }

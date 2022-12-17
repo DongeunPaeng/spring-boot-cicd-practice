@@ -1,9 +1,31 @@
 {{>layout/header}}
-<h1>12/15 1736</h1>
-<div>
-Below are the posts:
+<h1>Dongeun Blog</h1>
+<div class="posts-list">
+All Posts:
     {{#posts}}
-        <p>{{title}}</p>
+        <div class="post">
+            <p class="each-post">
+                Title: {{title}}<br/>
+                Post: {{post}}<br/>
+            </p>
+        </div>
     {{/posts}}
 </div>
+<div>
+    <form class="form-save">
+        <div>
+            <label for="save-title">Title:</label>
+            <input id="save-title" type="text" />
+        </div>
+        <div>
+            <label for="save-post">Post:</label>
+            <textarea id="save-post"></textarea>
+        </div>
+        <div class="btn-save-group">
+            <a id="btn-save-cancel" href="/">Cancel</a>
+            <button id="btn-save">Submit</button>
+        </div>
+    </form>
+</div>
+
 {{>layout/footer}}

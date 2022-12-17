@@ -100,7 +100,7 @@ class PostsApiControllerTest {
         // TODO: need token
         String reqBody = new ObjectMapper().writeValueAsString(postGivenDto);
         mvc.perform(MockMvcRequestBuilders
-                .post("/api/v1/post/edit")
+                .put("/api/v1/post/edit")
                 .content(reqBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
@@ -111,9 +111,9 @@ class PostsApiControllerTest {
     @Test
     public void deletePost() throws Exception {
         // TODO: need token
-        String reqBody = new ObjectMapper().writeValueAsString(postGivenDto);
+        String reqBody = "1";
         mvc.perform(MockMvcRequestBuilders
-                .post("/api/v1/post/delete")
+                .delete("/api/v1/post/delete")
                 .content(reqBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

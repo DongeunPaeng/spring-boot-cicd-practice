@@ -2,9 +2,11 @@ package com.dongeunpaeng.simplerestapp.web;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -47,16 +49,16 @@ public class PostsApiController {
     }
 
     // TODO: need token
-    @PostMapping("/api/v1/post/edit")
+    @PutMapping("/api/v1/post/edit")
     public Long editPost(@RequestBody PostDto postDto) {
         return postsService.editPost(postDto);
     }
 
     // TODO: need token
-    @PostMapping("/api/v1/post/delete")
-    public String deletePost(@RequestBody PostDto postDto) {
-        postsService.deletePost(postDto);
+    @DeleteMapping("/api/v1/post/delete")
+    public String deletePost(@RequestBody Long postId) {
+        // FIXME: how to throw exception to users?
+        postsService.deletePost(postId);
         return "successfully deleted";
-        // FIXME: is this the best practice for deleting job?
     }
 }
