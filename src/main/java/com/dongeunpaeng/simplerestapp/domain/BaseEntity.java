@@ -1,5 +1,6 @@
 package com.dongeunpaeng.simplerestapp.domain;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import lombok.Getter;
@@ -13,9 +14,11 @@ import java.time.LocalDateTime;
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
+    @Column(nullable = false, updatable = false)
     @CreatedDate
     private LocalDateTime createdAt;
 
+    @Column(nullable = false, updatable = false)
     @LastModifiedDate
     private LocalDateTime modifiedAt;
 }

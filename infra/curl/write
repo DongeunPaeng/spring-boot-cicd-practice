@@ -1,0 +1,49 @@
+curl --location --request POST 'localhost:8080/api/v1/post/write' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "author": 1,
+    "title": "test title 1",
+    "post": "test post 1",
+    "status": 0,
+    "type": 0
+}'
+
+curl --location --request POST 'localhost:8080/api/v1/post/write' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "author": 2,
+    "title": "test title 2",
+    "post": "test post 3",
+    "status": 2,
+    "type": 0
+}'
+
+curl --location --request POST 'localhost:8080/api/v1/post/write' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "author": 3,
+    "title": "test title 3",
+    "post": "test post 3",
+    "status": 1,
+    "type": 1
+}'
+
+curl --location --request POST 'localhost:8080/api/v1/post/write' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "author": 4,
+    "title": "test title 4",
+    "post": "test post 4",
+    "status": 1,
+    "type": 0
+}'
+
+curl --location --request POST 'localhost:8080/api/v1/post/write' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "author": 5,
+    "title": "test title 5",
+    "post": "test post 5",
+    "status": 2,
+    "type": 1
+}'

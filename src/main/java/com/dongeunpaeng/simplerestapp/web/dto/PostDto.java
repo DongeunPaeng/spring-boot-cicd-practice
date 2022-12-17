@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class PostDto {
+    private Long id;
     private Long author;
     private String title;
     private String post;
@@ -16,6 +17,7 @@ public class PostDto {
 
     @Builder
     public PostDto(Posts entity) {
+        this.id = entity.getId();
         this.author = entity.getAuthor();
         this.title = entity.getTitle();
         this.post = entity.getPost();
@@ -25,6 +27,7 @@ public class PostDto {
 
     public Posts toEntity() {
         return Posts.builder()
+                .id(id)
                 .author(author)
                 .title(title)
                 .post(post)

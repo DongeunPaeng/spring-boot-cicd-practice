@@ -36,12 +36,17 @@ class PostsApiControllerTest {
     PostDto postDto3 = PostDto.builder().entity(post3).build();
     PostDto postDto4 = PostDto.builder().entity(post4).build();
 
+    Posts postToEdit = Posts.builder().id(123L).author(1L).title("test title4").post("test post4").status(2L).type(1L)
+            .build();
+    PostDto postToEditDto = PostDto.builder().entity(postToEdit).build();
+
     @BeforeEach
     void initEach() {
         when(postsService.getPosts()).thenReturn(Arrays.asList(postDto1, postDto2, postDto3, postDto4));
         when(postsService.getPost(1L)).thenReturn(postDto1);
         when(postsService.getDrafts()).thenReturn(Arrays.asList(postDto2, postDto3, postDto4));
         when(postsService.savePost(any())).thenReturn(123L);
+        when(postsService.editPost(any())).thenReturn(123L);
     }
 
     @Test
@@ -83,6 +88,19 @@ class PostsApiControllerTest {
         String reqBody = new ObjectMapper().writeValueAsString(postDto1);
         mvc.perform(MockMvcRequestBuilders
                 .post("/api/v1/post/write")
+                .content(reqBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.jsonPath("$").value(123L));
+    }
+
+    @Test
+    public void editPost() throws Exception {
+        // TODO: need token
+        String reqBody = new ObjectMapper().writeValueAsString(postToEditDto);
+        mvc.perform(MockMvcRequestBuilders
+                .post("/api/v1/post/edit")
                 .content(reqBody)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))

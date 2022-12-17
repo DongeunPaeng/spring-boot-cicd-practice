@@ -28,11 +28,6 @@ public class PostsApiController {
         return postsService.getPost(id);
     }
 
-    @GetMapping("/api/v1/post/draft/{id}")
-    public PostDto getDraft(@PathVariable Long id) {
-        return postsService.getPost(id);
-    }
-
     // TODO: need token
     @GetMapping("/api/v1/post/draft")
     public List<PostDto> getDrafts() {
@@ -40,8 +35,26 @@ public class PostsApiController {
     }
 
     // TODO: need token
+    @GetMapping("/api/v1/post/draft/{id}")
+    public PostDto getDraft(@PathVariable Long id) {
+        return postsService.getPost(id);
+    }
+
+    // TODO: need token
     @PostMapping("/api/v1/post/write")
     public Long savePost(@RequestBody PostDto postDto) {
         return postsService.savePost(postDto);
     }
+
+    // TODO: need token
+    @PostMapping("/api/v1/post/edit")
+    public Long editPost(@RequestBody PostDto postDto) {
+        return postsService.editPost(postDto);
+    }
+
+    // // TODO: need token
+    // @PostMapping("/api/v1/post/delete")
+    // public Long deletePost(@RequestBody PostDto postDto) {
+    // return postsService.deletePost(postDto);
+    // }
 }

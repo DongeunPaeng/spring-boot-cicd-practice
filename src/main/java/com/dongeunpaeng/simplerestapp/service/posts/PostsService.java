@@ -38,4 +38,11 @@ public class PostsService {
     public Long savePost(PostDto saveDto) {
         return postsRepository.save(saveDto.toEntity()).getId();
     }
+
+    @Transactional
+    public Long editPost(PostDto editDto) {
+        postsRepository.findById(editDto.getId())
+                .orElseThrow(() -> new IllegalArgumentException("없는 ID입니다."));
+        return postsRepository.save(editDto.toEntity()).getId();
+    }
 }

@@ -30,7 +30,8 @@ public class Posts extends BaseEntity {
     private Long type;
 
     @Builder
-    public Posts(Long author, String title, String post, Long status, Long type) {
+    public Posts(Long id, Long author, String title, String post, Long status, Long type) {
+        this.id = id;
         this.author = author;
         this.title = title;
         this.post = post;

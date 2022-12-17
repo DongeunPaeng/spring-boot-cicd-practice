@@ -29,36 +29,24 @@ class PostsServiceTest {
     private PostsService postsService;
 
     @Test
-    public void savePost() {
-        // given
+    public void getPost() throws Exception {
+        // given - save virtual posts
         Posts posts = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(0L).build();
-        PostDto saveDto = PostDto.builder().entity(posts).build();
-        when(postsRepository.save(any())).thenReturn(posts);
-        ReflectionTestUtils.setField(posts, "id", 123L);
+        when(postsRepository.findById(any())).thenReturn(Optional.of(posts));
         // when
-        Long returnedId = postsService.savePost(saveDto);
+        PostDto returnedPosts = postsService.getPost(123L);
         // then
-        assertEquals(returnedId, 123L);
-    }
-
-    @Test
-    public void getDrafts() {
-        // given
-        Posts post1 = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(1L).build();
-        Posts post2 = Posts.builder().author(1L).title("test title").post("test post").status(1L).type(1L).build();
-        Posts post3 = Posts.builder().author(1L).title("test title").post("test post").status(2L).type(0L).build();
-        Posts post4 = Posts.builder().author(1L).title("test title").post("test post").status(2L).type(1L).build();
-        when(postsRepository.findAllByStatusGreaterThan(0L)).thenReturn(Arrays.asList(post2, post3, post4));
-        // when
-        List<PostDto> returnedPosts = postsService.getDrafts();
-        // then
-        assertTrue(returnedPosts.size() == 3);
-        assertTrue(!returnedPosts.contains(PostDto.builder().entity(post1).build()));
+        Assertions.assertThat(returnedPosts).isNotNull();
+        assertEquals(returnedPosts.getTitle(), posts.getTitle());
+        assertEquals(returnedPosts.getAuthor(), posts.getAuthor());
+        assertEquals(returnedPosts.getPost(), posts.getPost());
+        assertEquals(returnedPosts.getStatus(), posts.getStatus());
+        assertEquals(returnedPosts.getType(), posts.getType());
     }
 
     @Test
     public void getPosts() {
-        // given
+        // given - save virtual posts
         Posts posts = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(0L).build();
         when(postsRepository.findAll()).thenReturn(Arrays.asList(posts));
         // when
@@ -73,18 +61,45 @@ class PostsServiceTest {
     }
 
     @Test
-    public void getPost() throws Exception {
-        // given
-        Posts posts = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(0L).build();
-        when(postsRepository.findById(any())).thenReturn(Optional.of(posts));
+    public void getDrafts() {
+        // given - save virtual posts
+        Posts post1 = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(1L).build();
+        Posts post2 = Posts.builder().author(1L).title("test title").post("test post").status(1L).type(1L).build();
+        Posts post3 = Posts.builder().author(1L).title("test title").post("test post").status(2L).type(0L).build();
+        Posts post4 = Posts.builder().author(1L).title("test title").post("test post").status(2L).type(1L).build();
+        when(postsRepository.findAllByStatusGreaterThan(0L)).thenReturn(Arrays.asList(post2, post3, post4));
         // when
-        PostDto returnedPosts = postsService.getPost(123L);
+        List<PostDto> returnedPosts = postsService.getDrafts();
         // then
-        Assertions.assertThat(returnedPosts).isNotNull();
-        assertEquals(returnedPosts.getTitle(), posts.getTitle());
-        assertEquals(returnedPosts.getAuthor(), posts.getAuthor());
-        assertEquals(returnedPosts.getPost(), posts.getPost());
-        assertEquals(returnedPosts.getStatus(), posts.getStatus());
-        assertEquals(returnedPosts.getType(), posts.getType());
+        assertTrue(returnedPosts.size() == 3);
+        assertTrue(!returnedPosts.contains(PostDto.builder().entity(post1).build()));
+    }
+
+    @Test
+    public void savePost() {
+        // given - make virtual dto without ID
+        Posts posts = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(0L).build();
+        PostDto saveDto = PostDto.builder().entity(posts).build();
+        when(postsRepository.save(any())).thenReturn(posts);
+        ReflectionTestUtils.setField(posts, "id", 123L);
+        // when
+        Long returnedId = postsService.savePost(saveDto);
+        // then
+        assertEquals(returnedId, 123L);
+    }
+
+    @Test
+    public void editPost() {
+        // given
+        Posts posts = Posts.builder().author(1L).title("test title").post("test post").status(0L).type(0L)
+                .build();
+        PostDto editDto = PostDto.builder().entity(posts).build();
+        when(postsRepository.findById(any())).thenReturn(Optional.of(posts));
+        when(postsRepository.save(any())).thenReturn(posts);
+        ReflectionTestUtils.setField(posts, "id", 222L);
+        // when
+        Long returnedId = postsService.editPost(editDto);
+        // then
+        assertEquals(returnedId, 222L);
     }
 }
