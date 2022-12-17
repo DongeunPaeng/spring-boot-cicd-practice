@@ -1,5 +1,7 @@
 package com.dongeunpaeng.simplerestapp.web.dto;
 
+import java.time.LocalDateTime;
+
 import com.dongeunpaeng.simplerestapp.domain.posts.Posts;
 import lombok.Builder;
 import lombok.Getter;
@@ -15,7 +17,8 @@ public class PostDto {
     private Long status;
     private Long type;
     private Boolean deleted;
-    // FIXME: what about createdAt and modifiedAt?
+    private LocalDateTime createdAt;
+    private LocalDateTime modifiedAt;
 
     @Builder
     public PostDto(Posts entity) {
@@ -26,6 +29,8 @@ public class PostDto {
         this.status = entity.getStatus();
         this.type = entity.getType();
         this.deleted = entity.getDeleted();
+        this.createdAt = entity.getCreatedAt();
+        this.modifiedAt = entity.getModifiedAt();
     }
 
     public Posts toEntity() {
