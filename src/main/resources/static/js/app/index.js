@@ -21,7 +21,7 @@ const editPost = async (event) => {
 
     try {
         const response = await fetch("/api/v1/post/edit", {
-            method: "POST",
+            method: "PUT",
             body: JSON.stringify(requestBody),
             headers: {
                 "Content-Type": "application/json",
@@ -52,7 +52,7 @@ const savePost = async (event) => {
 
     try {
         const response = await fetch("/api/v1/post/write", {
-            method: "PUT",
+            method: "POST",
             body: JSON.stringify(requestBody),
             headers: {
                 "Content-Type": "application/json",
