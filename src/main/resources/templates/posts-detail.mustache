@@ -1,0 +1,18 @@
+{{>layout/header}}
+<h1>Dongeun Blog</h1>
+<div class="post-detail">
+The Selected Post:
+        <div class="post">
+            <p class="each-post">
+                Id: {{posts.id}}
+                Title: {{posts.title}}<br/>
+                Post: {{posts.post}}<br/>
+                Created: {{posts.createdAt}}<br/>
+                Last modified: {{posts.modifiedAt}}<br/>
+            </p>
+        </div>
+</div>
+<div>
+     <a id="btn-save-edit" href="/post/edit/{{posts.id}}">Edit</a>
+</div>
+{{>layout/footer}}

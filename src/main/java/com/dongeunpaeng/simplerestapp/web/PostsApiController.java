@@ -57,7 +57,6 @@ public class PostsApiController {
     // TODO: need token
     @DeleteMapping("/api/v1/post/delete")
     public String deletePost(@RequestBody Long postId) {
-        // FIXME: how to throw exception to users?
         postsService.deletePost(postId);
         return "successfully deleted";
     }

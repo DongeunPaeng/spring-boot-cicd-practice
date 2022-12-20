@@ -2,13 +2,12 @@ body {
   margin: 1rem;
 }
 
-.post-list {
+.post-list post-detail {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   width: 100%;
-  margin-bottom: 5rem;
-  background-color: azure;
+  margin-bottom: 1rem;
 }
 
 .post {
@@ -42,5 +41,9 @@ body {
 }
 
 #btn-save {
+  margin-left: 1rem;
+}
+
+#btn-edit {
   margin-left: 1rem;
 }

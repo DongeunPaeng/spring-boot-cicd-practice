@@ -1,32 +1,30 @@
 {{>layout/header}}
 <h1>Dongeun Blog</h1>
-<div class="post-list">
-All Posts:
-    {{#posts}}
+<div class="post-detail">
+The Selected Post:
         <div class="post">
             <p class="each-post">
-                Id: {{id}}
-                <a href="/post/{{id}}">Title: {{title}}</a><br/>
-                Post: {{post}}<br/>
-                Created: {{createdAt}}<br/>
-                Last modified: {{modifiedAt}}<br/>
+                Id: {{posts.id}}
+                Title: {{posts.title}}<br/>
+                Post: {{posts.post}}<br/>
+                Created: {{posts.createdAt}}<br/>
+                Last modified: {{posts.modifiedAt}}<br/>
             </p>
         </div>
-    {{/posts}}
 </div>
 <div>
     <form class="form-save">
         <div>
             <label for="save-title">Title:</label>
-            <input id="save-title" type="text" />
+            <input id="save-title" type="text" placeholder={{posts.title}} />
         </div>
         <div>
             <label for="save-post">Post:</label>
-            <textarea id="save-post"></textarea>
+            <textarea id="save-post" placeholder={{posts.post}}></textarea>
         </div>
         <div class="btn-save-group">
             <a id="btn-save-cancel" href="/">Cancel</a>
-            <button id="btn-save">Submit</button>
+            <button id="btn-edit">Submit</button>
         </div>
     </form>
 </div>
