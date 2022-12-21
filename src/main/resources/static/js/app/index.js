@@ -1,5 +1,29 @@
 const saveBtn = document.querySelector("#btn-save");
 const editBtn = document.querySelector("#btn-edit");
+const deleteBtn = document.querySelector("#btn-delete");
+
+const deletePost = async (event) => {
+    event.preventDefault();
+    const id = document.location.href.split("/").slice(-1).pop();
+
+    const requestBody = {
+        id,
+    };
+
+    try {
+        const response = await fetch("/api/v1/post/delete", {
+            method: "DELETE",
+            body: JSON.stringify(requestBody),
+            headers: {
+                "Content-Type": "application/json",
+            },
+        });
+        if (response.status !== 200) alert("오류 발생: 콘솔을 확인하세요.");
+        window.location.href = "/";
+    } catch (e) {
+        console.log(e);
+    }
+};
 
 const editPost = async (event) => {
     event.preventDefault();
@@ -70,4 +94,7 @@ if (saveBtn) {
 }
 if (editBtn) {
     editBtn.addEventListener("click", editPost);
+}
+if (deleteBtn) {
+    deleteBtn.addEventListener("click", deletePost);
 }

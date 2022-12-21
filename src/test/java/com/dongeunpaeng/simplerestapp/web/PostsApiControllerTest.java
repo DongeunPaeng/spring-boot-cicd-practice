@@ -17,6 +17,7 @@ import java.util.Arrays;
 import com.dongeunpaeng.simplerestapp.domain.posts.Posts;
 import com.dongeunpaeng.simplerestapp.service.posts.PostsService;
 import com.dongeunpaeng.simplerestapp.web.dto.PostDto;
+import com.dongeunpaeng.simplerestapp.web.dto.PostIdDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(PostsApiController.class)
@@ -39,6 +40,7 @@ class PostsApiControllerTest {
     Posts postGiven = Posts.builder().id(123L).author(1L).title("test title4").post("test post4").status(2L).type(1L)
             .build();
     PostDto postGivenDto = PostDto.builder().entity(postGiven).build();
+    PostIdDto postIdDto = new PostIdDto(1L);
 
     @BeforeEach
     void initEach() {
@@ -111,7 +113,7 @@ class PostsApiControllerTest {
     @Test
     public void deletePost() throws Exception {
         // TODO: need token
-        String reqBody = "1";
+        String reqBody = new ObjectMapper().writeValueAsString(postIdDto);
         mvc.perform(MockMvcRequestBuilders
                 .delete("/api/v1/post/delete")
                 .content(reqBody)

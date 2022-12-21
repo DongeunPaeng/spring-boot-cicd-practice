@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dongeunpaeng.simplerestapp.service.posts.PostsService;
 import com.dongeunpaeng.simplerestapp.web.dto.PostDto;
+import com.dongeunpaeng.simplerestapp.web.dto.PostIdDto;
 
 import lombok.RequiredArgsConstructor;
 
@@ -56,8 +57,8 @@ public class PostsApiController {
 
     // TODO: need token
     @DeleteMapping("/api/v1/post/delete")
-    public String deletePost(@RequestBody Long postId) {
-        postsService.deletePost(postId);
+    public String deletePost(@RequestBody PostIdDto postIdDto) {
+        postsService.deletePost(postIdDto.getId());
         return "successfully deleted";
     }
 }
